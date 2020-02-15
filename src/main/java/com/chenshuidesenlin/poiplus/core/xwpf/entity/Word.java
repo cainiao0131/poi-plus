@@ -1,9 +1,8 @@
-package com.cainiao.poiplus.core.xwpf.mylib;
+package com.chenshuidesenlin.poiplus.core.xwpf.entity;
 
-import com.cainiao.poiplus.core.xwpf.dto.chart.Chart;
-import com.cainiao.poiplus.core.xwpf.dto.chart.HistogramChart;
-import com.cainiao.poiplus.core.xwpf.dto.chart.LineChart;
-import com.cainiao.poiplus.core.xwpf.dto.Series;
+import com.chenshuidesenlin.poiplus.core.xwpf.chart.Chart;
+import com.chenshuidesenlin.poiplus.core.xwpf.chart.HistogramChart;
+import javafx.scene.chart.LineChart;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
@@ -87,19 +86,31 @@ public class Word implements Closeable {
          */
         int seriesLength = seriesList.size();
         chartData.setVaryColors(seriesLength != 1);
-        String[] categories = chart.getCategories();
+        List<String> categoryList = chart.getCategories();
+        final int categoryLength = categoryList == null ? 0 : categoryList.size();
+        String[] categories = new String[categoryLength];
+        if (categoryLength > 0) {
+            for (int i = 0; i < categoryLength; i++) {
+                categories[i] = categoryList.get(i);
+            }
+        }
 
-        final int categoryLength = categories.length;
         final XDDFDataSource<?> categoryDataSource = XDDFDataSourcesFactory.fromArray(
             categories, xwpfChart.formatRange(new CellRangeAddress(1, categoryLength, 0, 0)), 0);
         for (int i = 0; i < seriesLength; i++) {
             Series series = seriesList.get(i);
+            List<Double> valueList = series.getValues();
+            final int valueLength = valueList == null ? 0 : valueList.size();
+            Double[] values = new Double[valueLength];
+            if (valueLength > 0) {
+                for (int j = 0; j < valueLength; j++) {
+                    values[j] = valueList.get(j);
+                }
+            }
             int col = i + 1;
-            final XDDFNumericalDataSource<? extends Number>
-                valuesData = XDDFDataSourcesFactory.fromArray(
-                series.getValues(),
-                xwpfChart.formatRange(new CellRangeAddress(1, categoryLength, col, col)),
-                col);
+            final XDDFNumericalDataSource<? extends Number> valuesData = XDDFDataSourcesFactory
+                .fromArray(values,
+                xwpfChart.formatRange(new CellRangeAddress(1, categoryLength, col, col)), col);
             valuesData.setFormatCode("General");
             XDDFChartData.Series
                 barChartDataSeries = chartData.addSeries(categoryDataSource, valuesData);
