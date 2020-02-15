@@ -15,7 +15,7 @@ public class TestWord {
     @Test
     public void testAddChart() {
         try (Word word = Word.NEW();
-             OutputStream out = new FileOutputStream("chart-output.docx"))
+             OutputStream out = new FileOutputStream("word-output.docx"))
         {
             LineChart lineChart = LineChart.NEW();
             lineChart.setTitle("流量安全设备事件统计");
@@ -32,6 +32,8 @@ public class TestWord {
             word
                 .addChart(lineChart)
                 .addChart(histogramChart)
+                .addParagraph("testtestestttesttesttesttesttesttesttesttesttes" +
+                    "testtesttesttesttesttesttesttesttesttestttesttesttesttesttesttest")
                 .write(out);
         } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();

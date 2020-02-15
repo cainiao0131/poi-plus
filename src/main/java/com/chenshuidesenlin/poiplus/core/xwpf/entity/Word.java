@@ -2,7 +2,7 @@ package com.chenshuidesenlin.poiplus.core.xwpf.entity;
 
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.Chart;
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.HistogramChart;
-import javafx.scene.chart.LineChart;
+import com.chenshuidesenlin.poiplus.core.xwpf.chart.LineChart;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
@@ -26,6 +26,8 @@ import org.apache.poi.xddf.usermodel.chart.XDDFNumericalDataSource;
 import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
 import org.apache.poi.xwpf.usermodel.XWPFChart;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -128,6 +130,14 @@ public class Word implements Closeable {
         xwpfChart.setTitleOverlay(false);
         xwpfChart.setAutoTitleDeleted(false);
 
+        return this;
+    }
+
+    public Word addParagraph(String text) {
+        XWPFParagraph paragraph = xwpfDocument.createParagraph();
+        paragraph.setIndentationFirstLine(480);
+        XWPFRun xwpfRun = paragraph.createRun();
+        xwpfRun.setText(text == null ? "" : text);
         return this;
     }
 
