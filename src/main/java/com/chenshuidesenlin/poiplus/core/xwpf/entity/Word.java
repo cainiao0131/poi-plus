@@ -51,7 +51,7 @@ public class Word implements Closeable {
     public Word addChart(Chart chart) throws IOException, InvalidFormatException {
         // 创建图表
         XWPFChart xwpfChart = xwpfDocument
-            .createChart(XDDFChart.DEFAULT_WIDTH * 10, XDDFChart.DEFAULT_HEIGHT * 10);
+            .createChart(XDDFChart.DEFAULT_WIDTH * 11, XDDFChart.DEFAULT_HEIGHT * 9);
         // 设置分类坐标轴在底部，即x轴表示分类
         XDDFChartAxis bottomAxis = xwpfChart.createCategoryAxis(AxisPosition.BOTTOM);
         // 设置值坐标轴在左边，即y轴表示值
