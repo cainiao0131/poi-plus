@@ -3,6 +3,7 @@ package com.chenshuidesenlin.poiplus.core.xwpf.entity;
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.Chart;
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.HistogramChart;
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.LineChart;
+import com.chenshuidesenlin.poiplus.core.xwpf.chart.PieChart;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
@@ -78,16 +79,22 @@ public class Word implements Closeable {
             XDDFBarChartData tempData = (XDDFBarChartData) chartData;
             tempData.setBarGrouping(BarGrouping.CLUSTERED);
             tempData.setBarDirection(BarDirection.COL);
+        } else if (chart instanceof PieChart) {
+            chartData = xwpfChart.createData(ChartTypes.PIE, bottomAxis, leftAxis);
         }
         if (chartData == null) {
             return this;
         }
         /*
-          这有Bug，如果只有一个series，这里设置为true，会把category当做series的名称来用
-          因此只有一个series时需要设置setVaryColors为false
+          有多个series时，varyColors会为不同的series设置不同的颜色
+          只有一个series时，varyColors会为不同的category设置不同颜色
+          PieChart本来就只需要一个series，且需要为不同category设置不同颜色
+          而非PieChart需要为不同的series设置不同的颜色
+          因此，PieChart始终把varyColors设置为true
+          而非PieChart，在只有一个series时，需要把varyColors设置为false
          */
         int seriesLength = seriesList.size();
-        chartData.setVaryColors(seriesLength != 1);
+        chartData.setVaryColors(chart instanceof PieChart || seriesLength != 1);
         List<String> categoryList = chart.getCategories();
         final int categoryLength = categoryList == null ? 0 : categoryList.size();
         String[] categories = new String[categoryLength];
@@ -129,7 +136,6 @@ public class Word implements Closeable {
         xwpfChart.setTitleText(chart.getTitle());
         xwpfChart.setTitleOverlay(false);
         xwpfChart.setAutoTitleDeleted(false);
-
         return this;
     }
 
