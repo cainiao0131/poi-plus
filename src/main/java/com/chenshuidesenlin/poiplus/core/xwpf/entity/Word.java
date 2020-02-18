@@ -3,7 +3,9 @@ package com.chenshuidesenlin.poiplus.core.xwpf.entity;
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.Chart;
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.HistogramChart;
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.LineChart;
+import com.chenshuidesenlin.poiplus.core.xwpf.chart.Paragraph;
 import com.chenshuidesenlin.poiplus.core.xwpf.chart.PieChart;
+import com.chenshuidesenlin.poiplus.core.xwpf.chart.WordContent;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
@@ -136,6 +138,16 @@ public class Word implements Closeable {
         xwpfChart.setTitleText(chart.getTitle());
         xwpfChart.setTitleOverlay(false);
         xwpfChart.setAutoTitleDeleted(false);
+        return this;
+    }
+
+    public Word addWordContent(WordContent wordContent) throws IOException, InvalidFormatException {
+        if (wordContent instanceof Chart) {
+            return addChart((Chart) wordContent);
+        }
+        if (wordContent instanceof Paragraph) {
+            return addParagraph(((Paragraph) wordContent).getText());
+        }
         return this;
     }
 
