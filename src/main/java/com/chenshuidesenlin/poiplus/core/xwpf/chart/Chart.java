@@ -4,7 +4,7 @@ import com.chenshuidesenlin.poiplus.core.xwpf.entity.Series;
 
 import java.util.List;
 
-public interface Chart {
+public interface Chart extends WordContent {
 
     String getTitle();
 
