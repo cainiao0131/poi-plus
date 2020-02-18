@@ -1,8 +1,8 @@
 package com.chenshuidesenlin.poiplus.core.xwpf;
 
-import com.chenshuidesenlin.poiplus.core.xwpf.chart.HistogramChart;
-import com.chenshuidesenlin.poiplus.core.xwpf.chart.LineChart;
-import com.chenshuidesenlin.poiplus.core.xwpf.chart.PieChart;
+import com.chenshuidesenlin.poiplus.core.xwpf.entity.chart.HistogramChart;
+import com.chenshuidesenlin.poiplus.core.xwpf.entity.chart.LineChart;
+import com.chenshuidesenlin.poiplus.core.xwpf.entity.chart.PieChart;
 import com.chenshuidesenlin.poiplus.core.xwpf.entity.Word;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Test;

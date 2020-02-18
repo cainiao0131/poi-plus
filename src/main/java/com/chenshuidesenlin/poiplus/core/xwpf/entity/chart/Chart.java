@@ -1,6 +1,7 @@
-package com.chenshuidesenlin.poiplus.core.xwpf.chart;
+package com.chenshuidesenlin.poiplus.core.xwpf.entity.chart;
 
 import com.chenshuidesenlin.poiplus.core.xwpf.entity.Series;
+import com.chenshuidesenlin.poiplus.core.xwpf.entity.WordContent;
 
 import java.util.List;
 

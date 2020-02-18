@@ -1,4 +1,4 @@
-package com.chenshuidesenlin.poiplus.core.xwpf.chart;
+package com.chenshuidesenlin.poiplus.core.xwpf.entity.chart;
 
 /**
  * 折线图
